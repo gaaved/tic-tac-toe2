@@ -1,2 +1,4 @@
 <?php
-echo 'hello';
+$rest = 111212;
+$foet = 'tik';
+include('game.html');
