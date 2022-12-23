@@ -98,9 +98,12 @@ body {
 p.lead{
     margin-bottom: 5px;
 }
-/*.mb-auto {*/
-/*    margin-top: 200px;*/
-/*}*/
+.mb {
+    margin-bottom: 20px;
+}
+footer{
+    margin-top: 20px;
+}
 /*.mt-auto {*/
 /*    margin-bottom: auto;*/
 /*}*/
