@@ -8,9 +8,51 @@ let cross = '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" fi
 
 
 let i = 0;
-function buttonId(id) {
-    i = i + 1;
 
-    document.getElementById(id).innerHTML = i % 2 === 0 ? circle : cross;
-    console.log(i);
+function buttonId(id, value) {
+    if (value === '0'){
+        i = i + 1;
+
+        document.getElementById(id).innerHTML = i % 2 === 0 ? circle : cross;
+        document.getElementById(id).value = i % 2 === 0 ? '2' : '1';
+    }
+    let winCombinant = [
+        [1,2,3],
+        [4,5,6],
+        [7,8,9],
+        [1,4,7],
+        [2,5,8],
+        [3,6,9],
+        [1,5,9],
+        [3,5,7]
+    ];
+
+    for (const idElement of winCombinant) {
+        let win = '';
+        let winCross = '111';
+        let winCircle = '222';
+
+        for (const idButton of idElement) {
+            win += document.getElementById(idButton).value;
+            if (win === winCross){
+
+                document.getElementById('exampleModal').hidden = false;
+                //alert('Win Cross');
+                //clearGame();
+            }
+            if (win === winCircle){
+
+                //alert('Win Circle')
+                //clearGame();
+            }
+        }
+    }
+}
+
+function clearGame() {
+    for (let id=1; id<=9; id++){
+        document.getElementById(id).innerHTML = '';
+        document.getElementById(id).value = 0;
+        i = 0;
+    }
 }

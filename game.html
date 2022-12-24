@@ -26,25 +26,48 @@
 
     <main class="px-3">
         <p class="lead">
-            <button onclick="buttonId(id)" class="btn btn-lg btn-secondary fw-bold border-white bg-white" id="1"></button>
-            <button onclick="buttonId(id)" class="btn btn-lg btn-secondary fw-bold border-white bg-white" id="2"></button>
-            <button onclick="buttonId(id)" class="btn btn-lg btn-secondary fw-bold border-white bg-white"id="3"></button>
+            <button onclick="buttonId(id, value)" class="btn btn-lg btn-secondary fw-bold border-white bg-white" id="1" value="0"></button>
+            <button onclick="buttonId(id, value)" class="btn btn-lg btn-secondary fw-bold border-white bg-white" id="2" value="0"></button>
+            <button onclick="buttonId(id, value)" class="btn btn-lg btn-secondary fw-bold border-white bg-white"id="3" value="0"></button>
         </p>
         <p class="lead">
-            <button onclick="buttonId(id)" class="btn btn-lg btn-secondary fw-bold border-white bg-white" id="4"></button>
-            <button onclick="buttonId(id)" class="btn btn-lg btn-secondary fw-bold border-white bg-white" id="5"></button>
-            <button onclick="buttonId(id)" class="btn btn-lg btn-secondary fw-bold border-white bg-white" id="6"></button>
+            <button onclick="buttonId(id, value)" class="btn btn-lg btn-secondary fw-bold border-white bg-white" id="4" value="0"></button>
+            <button onclick="buttonId(id, value)" class="btn btn-lg btn-secondary fw-bold border-white bg-white" id="5" value="0"></button>
+            <button onclick="buttonId(id, value)" class="btn btn-lg btn-secondary fw-bold border-white bg-white" id="6" value="0"></button>
         </p>
         <p class="lead">
-            <button onclick="buttonId(id)" class="btn btn-lg btn-secondary fw-bold border-white bg-white" id="7"></button>
-            <button onclick="buttonId(id)" class="btn btn-lg btn-secondary fw-bold border-white bg-white" id="8"></button>
-            <button onclick="buttonId(id)" class="btn btn-lg btn-secondary fw-bold border-white bg-white" id="9"></button>
+            <button onclick="buttonId(id, value)" class="btn btn-lg btn-secondary fw-bold border-white bg-white" id="7" value="0"></button>
+            <button onclick="buttonId(id, value)" class="btn btn-lg btn-secondary fw-bold border-white bg-white" id="8" value="0"></button>
+            <button onclick="buttonId(id, value)" class="btn btn-lg btn-secondary fw-bold border-white bg-white" id="9" value="0"></button>
         </p>
     </main>
 
     <footer class="mt text-white-50">
         <p>Game <text class="text-white">Tic-tac-toe</text> by <text class="text-white">Kolia</text>.</p>
     </footer>
+</div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="bootstrap-5.2.3/js/bootstrap.bundle.min.js"></script>
