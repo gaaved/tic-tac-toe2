@@ -1,14 +1,13 @@
 <?php
 include('game.html');
+include('History.php');
 
 if (isset($_POST)) {
-    updateHistory();
+  $updateHistory = new History;
+    $updateHistory->getHistory();
 }
 
 
-function updateHistory()
-{
- var_dump('dddd');
-}
+
 
 

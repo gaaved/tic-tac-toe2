@@ -7,15 +7,20 @@ class History
 
     public function __construct()
     {
-        $this->connect = new mysqli("localhost", "root", "", "project");
+        $this->connect = new mysqli("localhost", "root", "", "tic_tac_toe");
 
         if ($this->connect->connect_error) {
             die("Connection failed: " . $this->connect->connect_error);
         }
     }
 
-    public function getCategory()
+    public function getHistory()
     {
-        return $this->connect->query("SELECT * FROM `categories`")->fetch_all(MYSQLI_ASSOC);
+        return 'ffffff';
+        //return $this->connect->query("SELECT * FROM `game_history`")->fetch_all(MYSQLI_ASSOC);
+    }
+    public function updateHistory()
+    {
+        return $this->connect->query("SELECT * FROM `game_history`")->fetch_all(MYSQLI_ASSOC);
     }
 }

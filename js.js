@@ -30,8 +30,8 @@ function buttonId(id, value) {
             type:     "POST", //метод отправки
             dataType: "", //формат данных
             data: dataObj,  // Сеарилизуем объект
-            success: function(response) { //Данные отправлены успешно
-                console.log(dataObj);
+            success: function(data) { //Данные отправлены успешно
+                console.log(data);
             }
         });
     }
