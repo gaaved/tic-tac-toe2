@@ -8,7 +8,7 @@ let cross = '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" fi
 
 
 let i = 0;
-let data = [];
+let dataObj = [];
 function buttonId(id, value) {
     if (value === '0'){
         i += 1;
@@ -20,18 +20,18 @@ function buttonId(id, value) {
 
 
 
-        data.push({
+        dataObj.push({
             id: id,
             val: val
         });
-        console.log(data);
+        console.log(dataObj);
         $.ajax({
             url:     'index.php', //url страницы (action_ajax_form.php)
             type:     "POST", //метод отправки
-            dataType: "json", //формат данных
-            data: data,  // Сеарилизуем объект
+            dataType: "", //формат данных
+            data: dataObj,  // Сеарилизуем объект
             success: function(response) { //Данные отправлены успешно
-                console.log('done');
+                console.log(response);
             }
         });
     }
