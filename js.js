@@ -31,7 +31,7 @@ function buttonId(id, value) {
             dataType: "", //формат данных
             data: dataObj,  // Сеарилизуем объект
             success: function(response) { //Данные отправлены успешно
-                console.log(response);
+                console.log(dataObj);
             }
         });
     }
