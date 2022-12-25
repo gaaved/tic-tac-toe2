@@ -8,15 +8,34 @@ let cross = '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" fi
 
 
 let i = 0;
-
+let data = [];
 function buttonId(id, value) {
     if (value === '0'){
-        i = i + 1;
+        i += 1;
+
+        let val = i % 2 === 0 ? '2' : '1';
 
         document.getElementById(id).innerHTML = i % 2 === 0 ? circle : cross;
-        document.getElementById(id).value = i % 2 === 0 ? '2' : '1';
+        document.getElementById(id).value = val;
+
+
+
+        data.push({
+            id: id,
+            val: val
+        });
+        console.log(data);
+        $.ajax({
+            url:     'index.php', //url страницы (action_ajax_form.php)
+            type:     "POST", //метод отправки
+            dataType: "json", //формат данных
+            data: data,  // Сеарилизуем объект
+            success: function(response) { //Данные отправлены успешно
+                console.log('done');
+            }
+        });
     }
-    let winCombinant = [
+    let winCombination = [
         [1,2,3],
         [4,5,6],
         [7,8,9],
@@ -27,7 +46,7 @@ function buttonId(id, value) {
         [3,5,7]
     ];
 
-    for (const idElement of winCombinant) {
+    for (const idElement of winCombination) {
         let win = '';
         let winCross = '111';
         let winCircle = '222';
@@ -35,24 +54,26 @@ function buttonId(id, value) {
         for (const idButton of idElement) {
             win += document.getElementById(idButton).value;
             if (win === winCross){
-
-                document.getElementById('exampleModal').hidden = false;
-                //alert('Win Cross');
-                //clearGame();
+                let winner = 'Cross';
+                clearGame(winner);
             }
             if (win === winCircle){
-
-                //alert('Win Circle')
-                //clearGame();
+                let winner = 'Circle';
+                clearGame(winner);
             }
         }
     }
+
+
 }
 
-function clearGame() {
-    for (let id=1; id<=9; id++){
-        document.getElementById(id).innerHTML = '';
-        document.getElementById(id).value = 0;
+function clearGame(winner) {
+    setTimeout(function() {
+        alert(winner + ' Won');
+        for (let id = 1; id <= 9; id++) {
+            document.getElementById(id).innerHTML = '';
+            document.getElementById(id).value = 0;
+        }
         i = 0;
-    }
+    }, 500);
 }
