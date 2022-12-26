@@ -28,8 +28,8 @@ function buttonId(id, value) {
         });
 
         dbChange('update_state');
-
     }
+
     let winCombination = [
         [1,2,3],
         [4,5,6],
@@ -48,28 +48,36 @@ function buttonId(id, value) {
 
         for (const idButton of idElement) {
             win += document.getElementById(idButton).value;
-            if (win === winCross){
-                dbChange('insert')
-                clearGame('Cross');
-                clearChangePage();
-            }
-            if (win === winCircle){
-                dbChange('insert')
-                clearGame('Circle');
-                clearChangePage();
-            }
+        }
+        if (win === winCross){
+            dbChange('insert');
+            clearGame('Cross');
+            clearChangePage();
+        }
+        if (win === winCircle){
+            dbChange('insert');
+            clearGame('Circle');
+            clearChangePage();
+        }
+        if(win !== winCircle && win !== winCross && i === 9){
+            dbChange('insert');
+            clearGame('Friendship');
+            clearChangePage();
+
         }
     }
+
 }
 
 function clearGame(winner) {
+    i = 0;
     setTimeout(function() {
         alert(winner + ' Won');
         for (let id = 1; id <= 9; id++) {
             document.getElementById(id).innerHTML = '';
             document.getElementById(id).value = 0;
         }
-        i = 0;
+
     }, 500);
 }
 
