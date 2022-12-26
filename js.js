@@ -28,11 +28,12 @@ function addHistory(){
         dataType: 'json',
         async: false,
         success: function(result) {
-            let idGeam='';
+
             let moveHistory ='';
             $.each(result, function (v) {
                 JSON.parse(result[v].move);
-                idGeam = result[v].id;
+                let idGeam = result[v].id;
+                let  winner = result[v].winner;
                 moveHistory = JSON.parse(result[v].move);
 
                 let htmlMoves = '';
@@ -44,7 +45,8 @@ function addHistory(){
                 $('#dropdown').append(
                     '<li class="nav-item dropdown">\n' +
                     '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Game ' + idGeam + '</a>\n' +
-                    '<ul class="dropdown-menu dropdown-menu-dark">\n' +
+                    '<ul class="dropdown-menu dropdown-menu-dark">\n'+
+                    '<li><div style="margin-left: 10px">Winner: ' + winner + '</div></li>\n' +
                     htmlMoves +
                     '</ul>\n' +
                     '</li>\n' +
