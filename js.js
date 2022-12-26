@@ -5,13 +5,14 @@ let circle = '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"\n
 let cross = '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 17 16">\n' +
     '<path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>\n' +
     '</svg>';
-let history = '<li class="nav-item dropdown">\n' +
-    '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>\n' +
-    '<ul class="dropdown-menu dropdown-menu-dark">\n' +
-    '<li><hr class="dropdown-divider"></li>\n' +
-    '<li><div style="margin-left: 10px">Something else here</div></li>\n' +
-    '</ul>\n' +
-    '</li>';
+
+let miniCircle = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"\n' +
+    'fill="currentColor" class="bi bi-circle" viewBox="0 0 18 16">\n' +
+    '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
+    '</svg>';
+let miniCross = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 17 16">\n' +
+    '<path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>\n' +
+    '</svg>';
 
 document.addEventListener("DOMContentLoaded", function () {
     addHistory();
@@ -27,18 +28,27 @@ function addHistory(){
         dataType: 'json',
         async: false,
         success: function(result) {
-
+            let idGeam='';
+            let moveHistory ='';
             $.each(result, function (v) {
+                JSON.parse(result[v].move);
+                idGeam = result[v].id;
+                moveHistory = JSON.parse(result[v].move);
 
-                console.log(result);
-                // document.getElementById(dropdown).innerHTML =
-                //     '<li class="nav-item dropdown">\n' +
-                //     '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{result[v].id}</a>\n' +
-                //     '<ul class="dropdown-menu dropdown-menu-dark">\n' +
-                //     '<li><hr class="dropdown-divider"></li>\n' +
-                //     '<li><div style="margin-left: 10px">Something else here</div></li>\n' +
-                //     '</ul>\n' +
-                //     '</li>';
+                let htmlMoves = '';
+                $.each(moveHistory, function (k) {
+                let res = Number(moveHistory[k].val) % 2 === 0 ? miniCircle : miniCross;
+                    htmlMoves += '<li><div style="margin-left: 10px">' + 'Cell: ' + moveHistory[k].id + '  &nbsp&nbsp&nbsp  ' + 'Symbol ' + res + '</div></li>\n';
+                });
+
+                $('#dropdown').append(
+                    '<li class="nav-item dropdown">\n' +
+                    '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Game ' + idGeam + '</a>\n' +
+                    '<ul class="dropdown-menu dropdown-menu-dark">\n' +
+                    htmlMoves +
+                    '</ul>\n' +
+                    '</li>\n' +
+                    '</ul>\n');
             });
         }
     });
@@ -59,7 +69,6 @@ function buttonId(id, value) {
             id: id,
             val: val
         });
-        console.log(moves);
 
         dbChange('update_state');
     }
@@ -84,20 +93,21 @@ function buttonId(id, value) {
             win += document.getElementById(idButton).value;
         }
         if (win === winCross){
-            dbChange('insert');
+            dbChange('insert', 'Cross');
             clearGame('Cross');
         }
         if (win === winCircle){
-            dbChange('insert');
+            dbChange('insert', 'Circle');
             clearGame('Circle');
         }
         setTimeout(function() {
             if(win !== winCircle && win !== winCross && i === 9){
-                dbChange('insert');
+                dbChange('insert', 'Friendship');
                 clearGame('Friendship');
             }
-        }, 100);
+        }, 500);
     }
+
 }
 
 function clearGame(winner) {
@@ -109,6 +119,7 @@ function clearGame(winner) {
             document.getElementById(id).innerHTML = '';
             document.getElementById(id).value = 0;
         }
+
     }, 500);
 
     $.ajax({
@@ -123,12 +134,13 @@ function clearGame(winner) {
     });
 }
 
-function dbChange(method) {
+function dbChange(method, winner) {
     $.ajax({
         type: "POST",
         data: {
             select: method,
             moves: moves,
+            winner: winner,
         },
         url: "Routs.php",
         dataType: 'json',
@@ -162,3 +174,4 @@ function changePage() {
         }
     });
 }
+

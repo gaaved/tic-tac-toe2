@@ -18,9 +18,9 @@ class History
     {
         return $this->connect->query("SELECT * FROM `game_history`")->fetch_all(MYSQLI_ASSOC);
     }
-    public function insertHistory(string $res)
+    public function insertHistory(string $res, string $setWinner)
     {
-        return $this->connect->query("INSERT INTO `game_history` SET move = '" . $res . "'");
+        return $this->connect->query("INSERT INTO `game_history` SET move = '" . $res . "', winner = '" . $setWinner . "'");
     }
     public function updateStateHistory(string $res)
     {

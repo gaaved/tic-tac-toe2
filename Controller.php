@@ -13,15 +13,15 @@ class Controller
     public function getHistory()
     {
         $res = $this->historyClass->getHistory();
-        //$res2 = (string)json_encode($res);
         $ret = json_encode($res);
-        print_r($ret);
+        echo $ret;
     }
     public function insertHistory()
     {
         $setMove = $_POST['moves'];
+        $setWinner = $_POST['winner'];
         $res = (string)json_encode($setMove);
-        $this->historyClass->insertHistory($res);
+        $this->historyClass->insertHistory($res, $setWinner);
 
 
         echo $res;
