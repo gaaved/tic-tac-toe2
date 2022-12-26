@@ -1,11 +1,9 @@
 <?php
-include('game.html');
-include('History.php');
+require_once 'game.html';
+require_once 'Controller.php';
+require_once 'Routs.php';
 
-if (isset($_POST)) {
-  $updateHistory = new History;
-    $updateHistory->getHistory();
-}
+
 
 
 
