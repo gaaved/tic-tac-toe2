@@ -12,10 +12,10 @@ class Controller
 
     public function getHistory()
     {
-        $history = $this->historyClass->getHistory();
-        $res = json_encode($history);
-
-        echo $res;
+        $res = $this->historyClass->getHistory();
+        //$res2 = (string)json_encode($res);
+        $ret = json_encode($res);
+        print_r($ret);
     }
     public function insertHistory()
     {

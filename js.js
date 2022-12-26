@@ -5,11 +5,44 @@ let circle = '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"\n
 let cross = '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 17 16">\n' +
     '<path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>\n' +
     '</svg>';
+let history = '<li class="nav-item dropdown">\n' +
+    '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>\n' +
+    '<ul class="dropdown-menu dropdown-menu-dark">\n' +
+    '<li><hr class="dropdown-divider"></li>\n' +
+    '<li><div style="margin-left: 10px">Something else here</div></li>\n' +
+    '</ul>\n' +
+    '</li>';
 
 document.addEventListener("DOMContentLoaded", function () {
+    addHistory();
     changePage();
 });
+function addHistory(){
+    $.ajax({
+        type: "POST",
+        data: {
+            select: 'get',
+        },
+        url: "Routs.php",
+        dataType: 'json',
+        async: false,
+        success: function(result) {
 
+            $.each(result, function (v) {
+
+                console.log(result);
+                // document.getElementById(dropdown).innerHTML =
+                //     '<li class="nav-item dropdown">\n' +
+                //     '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{result[v].id}</a>\n' +
+                //     '<ul class="dropdown-menu dropdown-menu-dark">\n' +
+                //     '<li><hr class="dropdown-divider"></li>\n' +
+                //     '<li><div style="margin-left: 10px">Something else here</div></li>\n' +
+                //     '</ul>\n' +
+                //     '</li>';
+            });
+        }
+    });
+}
 
 let i = 0;
 let moves = [];
@@ -26,6 +59,7 @@ function buttonId(id, value) {
             id: id,
             val: val
         });
+        console.log(moves);
 
         dbChange('update_state');
     }
@@ -52,33 +86,41 @@ function buttonId(id, value) {
         if (win === winCross){
             dbChange('insert');
             clearGame('Cross');
-            clearChangePage();
         }
         if (win === winCircle){
             dbChange('insert');
             clearGame('Circle');
-            clearChangePage();
         }
-        if(win !== winCircle && win !== winCross && i === 9){
-            dbChange('insert');
-            clearGame('Friendship');
-            clearChangePage();
-
-        }
+        setTimeout(function() {
+            if(win !== winCircle && win !== winCross && i === 9){
+                dbChange('insert');
+                clearGame('Friendship');
+            }
+        }, 100);
     }
-
 }
 
 function clearGame(winner) {
     i = 0;
+    moves = [];
     setTimeout(function() {
         alert(winner + ' Won');
         for (let id = 1; id <= 9; id++) {
             document.getElementById(id).innerHTML = '';
             document.getElementById(id).value = 0;
         }
-
     }, 500);
+
+    $.ajax({
+        type: "POST",
+        data: {
+            select: 'clear_state',
+        },
+        url: "Routs.php",
+        async: false,
+        success: function(result) {
+        }
+    });
 }
 
 function dbChange(method) {
@@ -117,18 +159,6 @@ function changePage() {
                 document.getElementById(result[v].id).value = result[v].val;
                 document.getElementById(result[v].id).innerHTML =  result[v].val % 2 === 0 ? circle : cross;
             });
-        }
-    });
-}
-function clearChangePage() {
-    $.ajax({
-        type: "POST",
-        data: {
-            select: 'clear_state',
-        },
-        url: "Routs.php",
-        async: false,
-        success: function(result) {
         }
     });
 }
