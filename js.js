@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
     changePage();
 });
 
-
 let i = 0;
 let moves = [];
 function buttonId(id, value) {
@@ -75,16 +74,20 @@ function buttonId(id, value) {
     }
 }
 
+function modal(winner) {
+    $('#exampleModal').modal('show');
+    document.getElementById('exampleModalLabel').innerHTML = winner + ' Won';
+}
+
 function clearGame(winner) {
     i = 0;
     moves = [];
     setTimeout(function() {
-        alert(winner + ' Won');
+        modal(winner);
         for (let id = 1; id <= 9; id++) {
             document.getElementById(id).innerHTML = '';
             document.getElementById(id).value = 0;
         }
-
     }, 500);
 
     $.ajax({
@@ -142,7 +145,7 @@ function changePage() {
     });
 }
 
-function addHistory(){
+function addHistory() {
     $.ajax({
         type: "POST",
         data: {

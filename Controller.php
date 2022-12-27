@@ -14,6 +14,7 @@ class Controller
     {
         $res = $this->historyClass->getHistory();
         $ret = json_encode($res);
+
         echo $ret;
     }
     public function insertHistory()
@@ -23,7 +24,6 @@ class Controller
         $res = (string)json_encode($setMove);
         $this->historyClass->insertHistory($res, $setWinner);
 
-
         echo $res;
     }
     public function updateStateHistory()
@@ -32,12 +32,12 @@ class Controller
         $res = (string)json_encode($setMove);
         $this->historyClass->updateStateHistory($res);
 
-
         echo $res;
     }
     public function selectStateHistory()
     {
         $res = $this->historyClass->selectStateHistory();
+
         echo $res[0]['state'];
     }
     public function clearStateHistory()
