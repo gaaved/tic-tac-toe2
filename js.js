@@ -18,43 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     addHistory();
     changePage();
 });
-function addHistory(){
-    $.ajax({
-        type: "POST",
-        data: {
-            select: 'get',
-        },
-        url: "Routs.php",
-        dataType: 'json',
-        async: false,
-        success: function(result) {
 
-            let moveHistory ='';
-            $.each(result, function (v) {
-                JSON.parse(result[v].move);
-                let idGeam = result[v].id;
-                let  winner = result[v].winner;
-                moveHistory = JSON.parse(result[v].move);
-
-                let htmlMoves = '';
-                $.each(moveHistory, function (k) {
-                let res = Number(moveHistory[k].val) % 2 === 0 ? miniCircle : miniCross;
-                    htmlMoves += '<li><div style="margin-left: 10px">' + 'Cell: ' + moveHistory[k].id + '  &nbsp&nbsp&nbsp  ' + 'Symbol ' + res + '</div></li>\n';
-                });
-
-                $('#dropdown').append(
-                    '<li class="nav-item dropdown">\n' +
-                    '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Game ' + idGeam + '</a>\n' +
-                    '<ul class="dropdown-menu dropdown-menu-dark">\n'+
-                    '<li><div style="margin-left: 10px">Winner: ' + winner + '</div></li>\n' +
-                    htmlMoves +
-                    '</ul>\n' +
-                    '</li>\n' +
-                    '</ul>\n');
-            });
-        }
-    });
-}
 
 let i = 0;
 let moves = [];
@@ -109,7 +73,6 @@ function buttonId(id, value) {
             }
         }, 500);
     }
-
 }
 
 function clearGame(winner) {
@@ -131,9 +94,11 @@ function clearGame(winner) {
         },
         url: "Routs.php",
         async: false,
-        success: function(result) {
+        success: function() {
+            $("#dropdown").empty();
         }
     });
+    addHistory();
 }
 
 function dbChange(method, winner) {
@@ -172,6 +137,44 @@ function changePage() {
                 i = v+1;
                 document.getElementById(result[v].id).value = result[v].val;
                 document.getElementById(result[v].id).innerHTML =  result[v].val % 2 === 0 ? circle : cross;
+            });
+        }
+    });
+}
+
+function addHistory(){
+    $.ajax({
+        type: "POST",
+        data: {
+            select: 'get',
+        },
+        url: "Routs.php",
+        dataType: 'json',
+        async: false,
+        success: function(result) {
+
+            let moveHistory ='';
+            $.each(result, function (v) {
+                JSON.parse(result[v].move);
+                let idGeam = result[v].id;
+                let  winner = result[v].winner;
+                moveHistory = JSON.parse(result[v].move);
+
+                let htmlMoves = '';
+                $.each(moveHistory, function (k) {
+                    let res = Number(moveHistory[k].val) % 2 === 0 ? miniCircle : miniCross;
+                    htmlMoves += '<li><div style="margin-left: 10px">' + 'Cell: ' + moveHistory[k].id + '  &nbsp&nbsp&nbsp  ' + 'Symbol ' + res + '</div></li>\n';
+                });
+
+                $('#dropdown').append(
+                    '<li class="nav-item dropdown">\n' +
+                    '<a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Game ' + idGeam + '</a>\n' +
+                    '<ul class="dropdown-menu dropdown-menu-dark">\n'+
+                    '<li><div style="margin-left: 10px">Winner: ' + winner + '</div></li>\n' +
+                    htmlMoves +
+                    '</ul>\n' +
+                    '</li>\n' +
+                    '</ul>\n');
             });
         }
     });
