@@ -104,6 +104,8 @@ p.lead{
 footer{
     margin-top: 20px;
 }
-/*.mt-auto {*/
-/*    margin-bottom: auto;*/
-/*}*/
+
+.upd-height {
+    height: 100vh;
+    margin: 0 auto;
+}
